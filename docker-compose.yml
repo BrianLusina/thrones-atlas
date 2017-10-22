@@ -22,10 +22,8 @@ services:
     expose:
       - "8000"
     volumes:
-     - /usr/src/app/app/static
-    # command: /usr/bin/python manage.py runserver
-    # command: /usr/bin/supervisord
-    command: ./run_server.sh
+     - /usr/src/app/
+    command: npm run start
     depends_on:
      - postgres
 
