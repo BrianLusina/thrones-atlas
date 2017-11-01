@@ -28,8 +28,10 @@ function createPostgreSQLDockerFile {
     echo "" >> ${DOCKER_FILE}
 
     echo "MAINTAINER Brian Lusina \"lusinabrian@gmail.com\"" >> ${DOCKER_FILE}
+    echo "" >> ${DOCKER_FILE}
 
-    echo "RUN wget ${DATABASE_DUMP_URL}/${DATABASE_DUMP_FILE}" >> ${DOCKER_FILE}
+    echo "RUN apt-get update; apt-get install -y curl" >> ${DOCKER_FILE}
+    echo "RUN curl -L -o ${DATABASE_DUMP_FILE} ${DATABASE_DUMP_URL}/${DATABASE_DUMP_FILE}" >> ${DOCKER_FILE}
     echo "" >> ${DOCKER_FILE}
 
     # echo "# Set environment variables for postgres" >> ${DOCKER_FILE}
@@ -65,7 +67,8 @@ function createPostgreSQLDockerFile {
     # then create a database `${POSTGRES_DB}` owned by the ``${POSTGRES_USER}`` role.
     # Note: here we use ``&&\`` to run commands one after the other - the ``\``
     #       allows the RUN command to span multiple lines.
-    echo "RUN /etc/init.d/postgresql start && psql --command \"CREATE USER ${POSTGRES_USER} WITH SUPERUSER PASSWORD '$POSTGRES_PASSWORD}';\" &&\ createdb -O ${POSTGRES_DB} ${POSTGRES_USER}" >> ${DOCKER_FILE}
+    echo "RUN /etc/init.d/postgresql start && psql --command \"CREATE USER ${POSTGRES_USER} WITH SUPERUSER PASSWORD '$POSTGRES_PASSWORD}';" >> ${DOCKER_FILE}
+    echo "RUN /etc/init.d/postgresql start && psql --command createdb ${POSTGRES_DB} " >> ${DOCKER_FILE}
     echo "" >> ${DOCKER_FILE}
 
     echo "RUN psql --command -U ${POSTGRES_USER} -h localhost" >> ${DOCKER_FILE}
