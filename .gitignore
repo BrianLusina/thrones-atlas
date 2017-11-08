@@ -8,6 +8,7 @@ yarn-debug.log*
 yarn-error.log*
 .idea/
 .env
+
 # Runtime data
 pids
 *.pid
