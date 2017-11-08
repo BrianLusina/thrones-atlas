@@ -5,7 +5,7 @@ const log = require('./logger');
 const api = require('./api');
 
 
-const app = Koa();
+const app = new Koa();
 const port = process.env.PORT || 8000;
 const origin = process.env.CORS_ORIGIN | "*";
 app.use(cors({ origin }));

@@ -4,6 +4,12 @@ MAINTAINER Brian Lusina "lusinabrian@gmail.com"
 
 COPY ./package.json /app/package.json
 
+ENV PORT 5000
+ENV DATABASE_URL postgres://nightking:@localhost:5432/atlas_of_thrones?ssl=false
+ENV REDIS_HOST localhost
+ENV REDIS_PORT 6379
+ENV CORS_ORIGIN http://localhost:8080
+
 WORKDIR /app
 
 RUN npm install
