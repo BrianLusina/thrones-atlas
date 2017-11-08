@@ -4,7 +4,7 @@
   "description": "Game of Thrones interactive map, powered by Leaflet, PostGIS, and Redis.",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node server.js"
   },
   "engines": {
     "node": ">=7.6.0"
