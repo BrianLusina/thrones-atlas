@@ -31,3 +31,10 @@ app.use(async (ctx, next) => {
        log.error(`Request ${ctx.url} - ${err.message}`)
    }
 });
+
+app.use(api.routes(), api.allowedMethods());
+
+/**
+ * Run application
+ * */
+app.listen(port, () => { log.info(`App listening on port ${port}`) });
