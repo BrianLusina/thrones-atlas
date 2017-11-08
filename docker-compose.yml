@@ -1,18 +1,18 @@
 version: "3.0"
 
 services:
-  client:
-    restart: always
-    build: ./client
-    ports:
-      - "3000:3000"
-    expose:
-      - "5000"
-    volumes:
-      - /usr/src/app/
-    command: npm run start
-    depends_on:
-      - server
+#  client:
+#    restart: always
+#    build: ./client
+#    ports:
+#      - "3000:3000"
+#    expose:
+#      - "5000"
+#    volumes:
+#      - /usr/src/app/
+#    command: npm run start
+#    depends_on:
+#      - server
 
   server:
     restart: always
@@ -25,7 +25,9 @@ services:
      - /usr/src/app/
     command: npm run start
     depends_on:
-     - postgres
+     - database
+    links:
+      - database
 
   redis:
     restart: always
@@ -39,7 +41,7 @@ services:
       - /var/lib/postgresql
     command: "true"
 
-  postgres:
+  database:
     restart: always
     build: ./postgresql
     ports:

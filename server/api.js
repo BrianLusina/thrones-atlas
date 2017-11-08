@@ -2,7 +2,7 @@
  * API Routes Module
  */
 const Router = require("koa-router");
-const database = require("./database");
+// const database = require("./database");
 const cache = require("./cache");
 const joi =  require("joi");
 const validate = require("koa-joi-validate");
