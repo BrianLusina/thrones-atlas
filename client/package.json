@@ -2,6 +2,7 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
+  "description": "Client for Game of Thrones interactive map, Powered by Leaflet",
   "dependencies": {
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
