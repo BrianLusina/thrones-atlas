@@ -10,6 +10,7 @@ yarn-error.log*
 .env
 # Runtime data
 pids
+.vagrant/
 *.pid
 *.seed
 *.pid.lock
