@@ -26,7 +26,7 @@ function createPostgreSQLDockerFile {
 
     echo "FROM postgres:latest" >> ${DOCKER_FILE}
     echo "" >> ${DOCKER_FILE}
-    echo "MAINTAINER Brian Lusina \"lusinabrian@gmail.com\"" >> ${DOCKER_FILE}
+    echo "LABEL maintainer=\"lusinabrian@gmail.com\"" >> ${DOCKER_FILE}
     echo "" >> ${DOCKER_FILE}
     echo "# Set environment variables for postgres" >> ${DOCKER_FILE}
     echo "ENV POSTGRES_USER ${POSTGRES_USER}" >> ${DOCKER_FILE}
