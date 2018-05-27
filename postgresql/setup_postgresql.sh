@@ -3,7 +3,7 @@
 # This creates a docker file for the postgres configuration
 export POSTGRES_USER=nightking
 export POSTGRES_PASSWORD=atlas
-export POSTGRES_DB=atlasofthrones
+export POSTGRES_DB=thrones_atlas
 export DOCKER_FILE=Dockerfile
 export DATABASE_DUMP=atlas_of_thrones.sql
 

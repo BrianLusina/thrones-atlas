@@ -62,17 +62,17 @@ sudo chmod +x /usr/local/bin/docker-compose
 
 # installing postgres
 echo -e "${CYAN}===> Installing Postgres"
-# sudo touch /etc/apt/sources.list.d/pgdg.list
-# sudo echo deb http://apt.postgresql.org/pub/repos/apt/ xenial-pgdg main >> /etc/apt/sources.list.d/pgdg.list
-# wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
 sudo apt-get update
-sudo apt-get install -y postgresql postgresql-contrib
-# sudo apt-get install -y postgresql-10
-# sudo apt-get install -y postgresql-client-common
-# sudo apt-get install -y postgresql-client-10
+sudo apt-get install -y postgresql postgresql-contrib postgis
 
+# create a super user for postgres
 echo -e "${CYAN}===> Download postgres database dump"
 wget https://cdn.patricktriest.com/atlas-of-thrones/atlas_of_thrones.sql
+
+echo -e "${CYAN}===> Create database and user"
+sudo -u postgres createdb thrones_atlas
+sudo -u postgres createuser -s username=nightking
+sudo -u postgres psql -d thones_atlas < atlas_of_thrones.sql
 
 # Installing Redis
 echo -e "${CYAN}===> Installing Redis"
