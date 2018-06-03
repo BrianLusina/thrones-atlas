@@ -33,7 +33,7 @@ function createPostgreSQLDockerFile {
     echo "ENV POSTGRES_PASSWORD ${POSTGRES_PASSWORD}" >> ${DOCKER_FILE}
     echo "ENV POSTGRES_DB ${POSTGRES_DB}" >> ${DOCKER_FILE}
     echo "" >> ${DOCKER_FILE}
-    echo "RUN psql -U ${POSTGRES_USER} -h localhost" >> ${DOCKER_FILE}
+    echo "RUN postgres psql -U ${POSTGRES_USER} -h localhost" >> ${DOCKER_FILE}
     echo "RUN CREATE USER ${POSTGRES_USER} WITH PASSWORD '${POSTGRES_PASSWORD}';" >> ${DOCKER_FILE}
     echo "RUN CREATE DATABASE ${POSTGRES_DB};" >> ${DOCKER_FILE}
     echo "RUN GRANT ALL PRIVILEGES ON DATABASE ${POSTGRES_DB} to ${POSTGRES_USER};" >> ${DOCKER_FILE}
