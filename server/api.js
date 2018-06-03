@@ -4,7 +4,6 @@
 const Router = require('koa-router')
 const database = require('./database')
 const cache = require('./cache')
-const
 
 const router = new Router()
 
@@ -14,20 +13,20 @@ router.use(cache.checkResponseCache)
 // insert response into cache once handlers have finished
 router.use(cache.addResponseToCache)
 
-// add the routes
-router.use("/api", require("./routes"))
-
 // test endpoint
 router.get('/test', async ctx => {
-    ctx.body = 'Hello Thrones!! \n OK'
+  ctx.body = 'Hello Thrones!! \n OK'
 })
+
+// add the routes
+router.use('/api', require('./routes'))
 
 /**
  * Get the time from the database
  */
 router.get('/time', async ctx => {
-    const result = await database.queryTime()
-    ctx.body = result
+  const result = await database.queryTime()
+  ctx.body = result
 })
 
 module.exports = router
