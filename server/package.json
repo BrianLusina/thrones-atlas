@@ -2,7 +2,7 @@
   "name": "server",
   "version": "0.6.0",
   "description": "Server for Game of Thrones interactive map",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "start": "node server.js"
   },

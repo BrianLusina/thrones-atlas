@@ -1,12 +1,12 @@
 FROM node:latest
 
-MAINTAINER Brian Lusina "lusinabrian@gmail.com"
+LABEL maintainer="Brian Lusina,lusinabrian@gmail.com"
 
 COPY ./package.json /app/package.json
 
 WORKDIR /app
 
-RUN npm install
+RUN npm install --production
 
 COPY . /app
 
