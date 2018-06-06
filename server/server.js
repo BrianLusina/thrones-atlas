@@ -30,14 +30,15 @@ app.use(async (ctx, next) => {
     await next()
   } catch (error) {
     ctx.status = error.status || 500
-    ctx.body = error.message
     log.error(`Request Error ${ctx.url} - ${error.message}`)
+    log.error(`Error ${error}`)
   }
 })
 
 // apply default header responses
 app.use(async (ctx, next) => {
   await next()
+  ctx.set('Content-Type', 'text/plain; charset=utf')
   ctx.set('Cache-Control', 'public, max-age=3600')
 })
 

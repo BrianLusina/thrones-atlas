@@ -19,7 +19,9 @@ const client = new Client({
 // connect to DB
 client.connect().then(() => {
   log.info(`Connected to ${client.database} at ${client.host}:${client.port}`)
-}).catch(log.error)
+}).catch(err => {
+  log.error(`Failed to connect to database ${err}`)
+})
 
 module.exports = {
   /**
