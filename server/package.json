@@ -10,15 +10,15 @@
     "node": ">=7.6.0"
   },
   "dependencies": {
-    "dotenv": "4.0.0",
-    "ioredis": "3.1.4",
-    "joi": "10.6.0",
-    "kcors": "2.2.1",
-    "koa": "2.3.0",
-    "koa-joi-validate": "0.5.1",
-    "koa-router": "7.2.1",
-    "pg": "7.2.0",
-    "winston": "^3.0.0-rc5"
+    "dotenv": "^4.0.0",
+    "ioredis": "^3.1.4",
+    "joi": "^10.6.0",
+    "kcors": "^2.2.1",
+    "koa": "^2.3.0",
+    "koa-joi-validate": "^0.5.1",
+    "koa-router": "^7.2.1",
+    "pg": "^7.2.0",
+    "winston": "^3.0.0-rc6"
   },
   "devDependencies": {
     "eslint": "4.5.0",

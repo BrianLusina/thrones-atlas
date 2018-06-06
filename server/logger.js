@@ -5,7 +5,7 @@
 const winston = require('winston')
 const path = require('path')
 
-module.exports = new winston.createLogger({
+module.exports = winston.createLogger({
   format: winston.format.json(),
   transports: [
     new (winston.transports.Console)(),

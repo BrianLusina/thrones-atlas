@@ -1,18 +1,24 @@
 /**
  * Postgres DB Module
  */
-const postgres = require('pg')
+const {
+  Client
+} = require('pg')
 const log = require('./logger')
 const connectionString = process.env.DATABASE_URL
 
-// initialize Postgres Client
-const pgClient = postgres.Client({
+const client = new Client({
   connectionString
 })
 
+// initialize Postgres Client
+// const pgClient = postgres.Client({
+//   connectionString
+// })
+
 // connect to DB
-pgClient.connect().then(() => {
-  log.info(`Connected to ${pgClient.database} at ${pgClient.host}:${pgClient.port}`)
+client.connect().then(() => {
+  log.info(`Connected to ${client.database} at ${client.host}:${client.port}`)
 }).catch(log.error)
 
 module.exports = {
@@ -21,7 +27,7 @@ module.exports = {
    * @return {Promise<void>}
    */
   queryTime: async () => {
-    const result = await pgClient.query('SELECT NOW() as now')
+    const result = await client.query('SELECT NOW() as now')
     return result.rows[0]
   },
 
@@ -31,7 +37,7 @@ module.exports = {
    */
   getLocations: async type => {
     const locationQuery = `SELECT ST_AsGeoJSON(geog), name, type, gid FROM locations WHERE UPPER(type) = UPPER($1);`
-    const result = await pgClient.query(locationQuery, [type])
+    const result = await client.query(locationQuery, [type])
     return result.rows
   },
 
@@ -41,7 +47,7 @@ module.exports = {
    */
   getKingdomBoundaries: async () => {
     const boundaryQuery = `SELECT ST_AsGeoJSON(geog), name, gid FROM kingdoms;`
-    const result = await pgClient.query(boundaryQuery)
+    const result = await client.query(boundaryQuery)
     return result.rows
   },
 
@@ -52,7 +58,7 @@ module.exports = {
    */
   getRegionSize: async id => {
     const sizeQuery = `SELECT ST_AREA(geog) as size FROM kingdoms WHERE gid = $1LIMIT(1);`
-    const result = await pgClient.query(sizeQuery, [id])
+    const result = await client.query(sizeQuery, [id])
     return result.rows[0]
   },
 
@@ -68,7 +74,7 @@ module.exports = {
         AND kingdoms.gid = $1 
         AND locations.type = 'Castle';`
 
-    const result = await pgClient.query(countQuery, [regionId])
+    const result = await client.query(countQuery, [regionId])
     return result.rows[0]
   },
 
@@ -84,7 +90,7 @@ module.exports = {
     }
 
     const summaryQuery = `SELECT summary, url FROM ${table} WHERE gid = $1 LIMIT(1);`
-    const result = await pgClient.query(summaryQuery, [id])
+    const result = await client.query(summaryQuery, [id])
     return result.rows[0]
   }
 }

@@ -19,7 +19,7 @@ router.get('/test', async ctx => {
 })
 
 // add the routes
-router.use('/api', require('./routes'))
+router.use('/api', require('./routes').routes())
 
 /**
  * Get the time from the database

@@ -71,7 +71,8 @@ wget https://cdn.patricktriest.com/atlas-of-thrones/atlas_of_thrones.sql
 
 echo -e "${CYAN}===> Create database and user"
 sudo -u postgres createdb thrones_atlas
-sudo -u postgres createuser -s username=nightking
+# user will be allowed to create databases
+sudo -u postgres createuser -s username=nightking -d
 sudo -u postgres psql -d thones_atlas < atlas_of_thrones.sql
 
 # Installing Redis
