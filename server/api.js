@@ -3,16 +3,13 @@
  */
 const Router = require('koa-router')
 const database = require('./database')
-// TODO: handle caching
 // const cache = require('./cache')
 
 const router = new Router()
 
+// TODO: cache middleware
 // check cache before continuing to any endpoint handlers
-// router.use(cache.checkResponseCache)
-
-// insert response into cache once handlers have finished
-// router.use(cache.addResponseToCache)
+// router.use(cache.cacheMiddleware)
 
 // test endpoint
 router.get('/health', async ctx => {

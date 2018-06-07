@@ -1,31 +1,30 @@
 /**
  * Redis Cache Module
  */
-const Redis = require('ioredis')
-const redis = new Redis(process.env.REDIS_PORT, process.env.REDIS_HOST)
 
-// TODO: fix redis issues
+const redis = require('redis')
+const client = redis.createClient(process.env.REDIS_PORT, process.env.REDIS_HOST)
+
+// create redis middleware
 module.exports = {
-  // Koa middleware to check cache before continuing to any endpoint handlers
-  checkResponseCache (ctx, next) {
-    redis.get(ctx.path).then(response => {
-      ctx.body = JSON.parse(response)
-    }).catch(error => {
-      console.log(error)
-      next()
-    })
-  },
 
-  /**
-   * Koa middleware to insert responses to cache
-   */
-  async addResponseToCache (ctx, next) {
-    // wait until other handlers have finished
-    await next()
-    // if the request was successfull
-    if (ctx.body && ctx.status === 200) {
-      // cache the response
-      await redis.set(ctx.path, JSON.stringify(ctx.body))
-    }
+  cacheMiddleware (ctx, next) {
+    let key = ctx.path
+    console.log(`Cache middleware path key ${key}`)
+    client.get(key, function (err, reply) {
+      if (reply) {
+        ctx.body = JSON.parse(reply)
+        console.log(`Cache middleware body ${ctx.body}`)
+      } else {
+        next()
+        console.log(`Cache middleware next ${ctx.body}, ${ctx.status}`)
+        // if the request was successfull
+        if (ctx.body && ctx.status === 200) {
+          // cache the response
+          client.set(key, JSON.stringify(ctx.body))
+        }
+      }
+      console.log(`Error in Cache middleware ${err}`)
+    })
   }
 }
