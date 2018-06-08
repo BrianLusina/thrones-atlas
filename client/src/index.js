@@ -1,8 +1,11 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import registerServiceWorker from './registerServiceWorker';
+import './styles/index.scss';
+import template from "index.html";
+import ApiService from "./services/ApiService";
 
-ReactDOM.render(<App />, document.getElementById('root'));
-registerServiceWorker();
+class ViewController {
+    constructor() {
+        console.log("Hey There!!")
+    }
+}
+
+window.ctrl = new ViewController()

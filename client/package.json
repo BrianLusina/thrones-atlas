@@ -9,12 +9,18 @@
     "leaflet": "^1.3.1"
   },
   "scripts": {
-    "start": "webpack --watch http-server ./public",
-    "start:dev": "NODE_ENV=dev npm start",
+    "start:prod": "webpack --mode=production --watch & http-server ./public -p 3000",
+    "start:dev": "webpack --mode=development --watch & http-server ./public -p 3000",
     "build": "NODE_ENV=production webpack"
   },
   "devDependencies": {
     "babel-loader": "^7.1.4",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-decorators": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
     "babili-webpack-plugin": "^0.1.2",
     "css-loader": "^0.28.11",
     "html-loader": "^0.5.5",
@@ -23,6 +29,7 @@
     "sass-loader": "^7.0.3",
     "style-loader": "^0.21.0",
     "url-loader": "^1.0.1",
-    "webpack": "^4.12.0"
+    "webpack": "^4.12.0",
+    "webpack-cli": "^3.0.3"
   }
 }

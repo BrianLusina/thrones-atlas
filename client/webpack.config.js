@@ -7,7 +7,7 @@ const babelLoader = {
     loader: "babel-loader",
     include: [path.resolve(__dirname, "./src")],
     query: {
-        presets: ["es2017"]
+        presets: ["es2015"]
     }
 }
 
@@ -26,8 +26,16 @@ const urlLoader = {
 // html loader allows us to import HTML templates in JS files
 const htmlLoader = {
     test: /\.html$/,
-    loader: "html-loader"
+    exclude: /node_modules/,
+    use: [{
+        loader: 'html-loader',
+        options: {
+            minimize: true
+        }
+    }]
 }
+
+const env = process.env.NODE_ENV;
 
 const webpackConfig = {
     entry: "./src/index.js", // start at src/index.js
@@ -36,13 +44,11 @@ const webpackConfig = {
         filename: "bundle.js" // output to public/bundle.js
     },
     module: {
-        loaders: [
+        rules: [
             babelLoader, scssLoader, urlLoader, htmlLoader
         ]
     }
 }
-
-const env = process.env.NODE_ENV;
 
 if (env === "production") {
     webpackConfig.plugins = [new BabiliPlugin({})]
