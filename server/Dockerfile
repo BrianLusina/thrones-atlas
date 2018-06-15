@@ -1,16 +1,10 @@
-FROM node:latest
+FROM node:10
 
 LABEL maintainer="Brian Lusina,lusinabrian@gmail.com"
 
-COPY ./package.json /app/package.json
-
-WORKDIR /app
-
-RUN npm install --production
-
 COPY . /app
 
-# this will expose this app to other containers via port 8000
+# this will expose this app to other containers via port 5000
 EXPOSE 5000
 
 ENTRYPOINT [ "npm" ]

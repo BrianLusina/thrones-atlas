@@ -28,5 +28,5 @@ script:
         - cd server && npm ci
         - npm run test
         - npm run build
-        - docker build -t $DOCKER_USERNAME/thrones-atlas-servert .
+        - docker build -t $DOCKER_USERNAME/thrones-atlas-server .
         - docker push $DOCKER_USERNAME/thrones-atlas-server

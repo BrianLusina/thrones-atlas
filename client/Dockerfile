@@ -1,5 +1,5 @@
-FROM node:latest
+FROM nginx
 
 LABEL maintainer="Brian Lusina lusiabrai@gmail.com"
 
-COPY . /app
+COPY build /usr/share/nginx/html
