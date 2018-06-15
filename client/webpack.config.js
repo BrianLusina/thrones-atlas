@@ -25,20 +25,22 @@ const urlLoader = {
 
 // html loader allows us to import HTML templates in JS files
 const htmlLoader = {
-    test: /\.html$/,
-    exclude: /node_modules/,
-    use: [{
+    test: /\.(html)$/,
+    use: {
         loader: 'html-loader',
         options: {
+            attrs: [':data-src'],
             minimize: true
         }
-    }]
+    },
+    exclude: /node_modules/,
 }
 
 const env = process.env.NODE_ENV;
 
 const webpackConfig = {
-    entry: "./src/index.js", // start at src/index.js
+    // start at src/index.js
+    entry: ["babel-polyfill", "./src/index.js"],
     output: {
         path: path.resolve(__dirname, "public"),
         filename: "bundle.js" // output to public/bundle.js

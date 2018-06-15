@@ -1,6 +1,6 @@
 {
   "presets": [
-    "env"
+    "env", "es2015"
   ],
   "plugins": [
     "transform-decorators", "transform-object-rest-spread",

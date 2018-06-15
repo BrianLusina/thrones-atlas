@@ -1,5 +1,5 @@
 import './styles/index.scss';
-import template from "index.html";
+import template from "./index.html";
 import ApiService from "./services/ApiService";
 
 class ViewController {
