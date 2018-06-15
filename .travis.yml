@@ -1,0 +1,32 @@
+sudo: required
+dist: trusty
+language: node_js
+node_js:
+        - '9'
+        - '10'
+
+services:
+        - docker
+
+cache:
+        directories:
+                - "$HOME/client/node_modules/"
+                - "$HOME/client/.npm/"
+                - "$HOME/client/.cache/"                
+                - "$HOME/server/node_modules/"
+                - "$HOME/server/.npm/"
+                - "$HOME/server/.cache/"
+
+script:
+        - echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
+        - cd client && npm ci
+        - npm run test
+        - npm run build
+        - docker build -t $DOCKER_USERNAME/thrones-atlas-client .
+        - docker push $DOCKER_USERNAME/thrones-atlas-client
+        - cd ..
+        - cd server && npm ci
+        - npm run test
+        - npm run build
+        - docker build -t $DOCKER_USERNAME/thrones-atlas-servert .
+        - docker push $DOCKER_USERNAME/thrones-atlas-server
