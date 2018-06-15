@@ -1,10 +1,10 @@
 import './styles/index.scss';
 import template from "./index.html";
-import ApiService from "./services/ApiService";
+import apiService from "./services/ApiService";
 
 class ViewController {
     constructor() {
-        console.log("Hey There!!")
+        document.getElementById("app").outerHTML = template
     }
 }
 

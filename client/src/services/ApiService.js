@@ -9,7 +9,7 @@ import {
   get
 } from 'axios';
 
-export default class ApiService {
+class ApiService {
   /**
    * Constructor for the ApiService class. This constructs new objects by passing in the optional
    * url
@@ -100,3 +100,5 @@ export default class ApiService {
     }
   }
 }
+
+export default ApiService()
