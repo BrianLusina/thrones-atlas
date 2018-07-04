@@ -1,6 +1,7 @@
 import './styles/index.scss';
 import template from "./index.html";
-import apiService from "./services/ApiService";
+import ApiService from "./services/ApiService";
+import SearchService from "./services/SearchService";
 
 class ViewController {
     constructor() {
