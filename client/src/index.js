@@ -6,6 +6,7 @@ import ApiService from "./services/ApiService";
 import SearchService from "./services/SearchService";
 import InfoPanel from './components/infopanel/InfoPanel'
 import Map from './components/map/Map'
+import LayerPanel from './components/layerpanel/LayerPanel'
 
 class ViewController {
     constructor() {
@@ -23,10 +24,25 @@ class ViewController {
     }
 
     initializeComponents() {
+        // info component
         this.infoComponent = new InfoPanel("info-panel-placeholder", {
             apiService: this.api
         })
+
+        // map component
         this.mapComponent = new Map("map-placeholder")
+
+        // layer panel
+        // When the component triggers the layerToggle event, the callback will then toggle the layer within the map component.
+        this.layerPanel = new LayerPanel("layer-panel-placeholder", {
+            layerNames: ["kingdom", ...this.locationPointTypes],
+            events: {
+                // Toggle layer in map controller on "layerToggle" event
+                layerToggle: event => {
+                    this.mapComponent.toggleLayer(event.detail)
+                }
+            }
+        })
     }
 
     /**
@@ -40,20 +56,21 @@ class ViewController {
         this.mapComponent.addKingdomGeoJson(kingdomGeoJson);
 
         // show kingdom boundaries
-        this.mapComponent.toggleLayer("kingdoms", {
-            events: {
-                locationSelected: ({
-                    detail: {
-                        name,
-                        id,
-                        type
-                    }
-                }) => {
-                    // show data in infoComponent/InfoPanel on "locationSelected" event
-                    this.infoComponent.showInfo(name, id, type)
-                }
-            }
-        });
+        this.layerPanel.toggleMapLayer("kingdoms")
+        // this.layerPanel.toggleLayer("kingdoms", {
+        //     events: {
+        //         locationSelected: ({
+        //             detail: {
+        //                 name,
+        //                 id,
+        //                 type
+        //             }
+        //         }) => {
+        //             // show data in infoComponent/InfoPanel on "locationSelected" event
+        //             this.infoComponent.showInfo(name, id, type)
+        //         }
+        //     }
+        // });
 
         // download location point geo data
         for (let locationType of this.locationPointTypes) {
