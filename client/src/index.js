@@ -95,7 +95,7 @@ class ViewController {
      * @param {String} layerName
      */
     getIconUrl(layerName) {
-        return `https://cdn.patricktriest.com/atlas-of-thrones/icons/${layerName}.svg`
+        return `${process.env.ICON_URL}/${layerName}.svg`
     }
 }
 
