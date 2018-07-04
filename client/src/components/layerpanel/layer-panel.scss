@@ -6,8 +6,8 @@
 
 .layer-panel {
   position: absolute;
-  top: $panelMargin;
-  right: $panelMargin;
+  top: 24px;
+  right: 24px;
   padding: 12px;
   background: $midDark;
   z-index: 1000;
@@ -41,7 +41,7 @@
   }
 }
 
-@media (max-width: $breakpointMobile) {
+@media (max-width: 600px) {
   .layer-panel {
     display: inline-flex;
     align-items: center;
