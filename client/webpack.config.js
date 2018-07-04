@@ -17,10 +17,20 @@ const scssLoader = {
     loader: "style-loader!css-loader!sass-loader"
 }
 
+const cssLoader = {
+    test: /\.css$/,
+    loader: "style-loader!css-loader"
+}
+
 // url loader to resolve data urls at build time
 const urlLoader = {
-    test: /\.(.png|svg|woff|woff2|eot|ttf)$/,
+    test: /\.(.bmp|.png|svg|woff|woff2|eot|ttf|.jpe?g|.gif)$/,
     loader: "url-loader?limit=100000"
+}
+
+const fileLoader = {
+    exclude: [/\.(js|jsx|mjs)$/, /\.html$/, /\.json$/, /\.scss$/],
+    loader: "file-loader",
 }
 
 // html loader allows us to import HTML templates in JS files
@@ -47,7 +57,7 @@ const webpackConfig = {
     },
     module: {
         rules: [
-            babelLoader, scssLoader, urlLoader, htmlLoader
+            babelLoader, scssLoader, urlLoader, htmlLoader, cssLoader, fileLoader
         ]
     }
 }

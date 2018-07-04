@@ -28,7 +28,7 @@ export default class Component {
                 this.refs[elem.getAttribute("ref")] = elem
             })
         }
-        if (props.events) {
+        if (props) {
             this.createEvents(props.events)
         }
     }
@@ -38,9 +38,11 @@ export default class Component {
      * @param {Object} events Events for the given component
      */
     createEvents(events) {
-        Object.keys(events).forEach(eventName => {
-            this.componentElement.addEventListener(eventName, events[eventName], false)
-        });
+        if (events) {
+            Object.keys(events).forEach(eventName => {
+                this.componentElement.addEventListener(eventName, events[eventName], false)
+            });
+        }
     }
 
     /**
@@ -48,7 +50,7 @@ export default class Component {
      * @param {String} eventName event name
      * @param {Object} detail payload passed to event
      */
-    triggerEvents(eventName, detail) {
+    triggerEvent(eventName, detail) {
         const event = new window.CustomEvent(eventName, {
             detail
         })

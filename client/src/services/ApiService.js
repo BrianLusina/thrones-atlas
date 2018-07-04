@@ -2,6 +2,15 @@
  * ApiService.
  * Used to interact with the API by performing get requests to retrieve information
  * All get requests return an object.
+ * 
+ * We are using a CancelToken to ensure that we only have one outgoing request at a time. 
+ * This helps to avoid network race-conditions when a user is rapidly clicking through different locations. 
+ * This rapid clicking will create lots of HTTP GET requests, and can often result in the wrong data being 
+ * displayed once they stop clicking.
+ * 
+ * Without the CancelToken logic, the displayed data would be that for whichever HTTP request finished last, 
+ * instead of whichever location the user clicked on last. By canceling each previous request when a new request is made,
+ * we can ensure that the application is only downloading data for the currently selected location.
  */
 
 import {
