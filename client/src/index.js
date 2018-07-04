@@ -7,10 +7,13 @@ import SearchService from "./services/SearchService";
 import InfoPanel from './components/infopanel/InfoPanel'
 import Map from './components/map/Map'
 import LayerPanel from './components/layerpanel/LayerPanel'
+import SearchBar from './components/searchBar/SearchBar'
 
 class ViewController {
     constructor() {
         document.getElementById("app").outerHTML = template;
+
+        this.searchService = new SearchService()
 
         if (window.location.hostname == "localhost") {
             this.api = new ApiService('http://localhost:5000')
@@ -43,6 +46,24 @@ class ViewController {
                 }
             }
         })
+
+        // search panel
+        this.searchPanel = new SearchBar("search-panel-placeholder", {
+            searchService: this.searchService,
+            events: {
+                resultSelected: event => {
+                    // show result on map
+                    let searchResult = event.detail;
+
+                    if (!this.mapComponent.isLayerShowing(searchResult.layerName)) {
+                        // show result layer if currently hidden
+                        this.layerPanel.toggleMapLayer(searchResult.layerName)
+                    }
+
+                    this.mapComponent.selectLocation(searchResult.id, searchResult.layerName)
+                }
+            }
+        })
     }
 
     /**
@@ -52,36 +73,25 @@ class ViewController {
         // download kingdom geo json data
         const kingdomGeoJson = await this.api.getKingdoms();
 
+        // add boundary data to search service
+        this.searchService.addGeoJsonItems(kingdomGeoJson, "kingdom");
+
         // add data to map
         this.mapComponent.addKingdomGeoJson(kingdomGeoJson);
 
         // show kingdom boundaries
-        this.layerPanel.toggleMapLayer("kingdoms")
-        // this.layerPanel.toggleLayer("kingdoms", {
-        //     events: {
-        //         locationSelected: ({
-        //             detail: {
-        //                 name,
-        //                 id,
-        //                 type
-        //             }
-        //         }) => {
-        //             // show data in infoComponent/InfoPanel on "locationSelected" event
-        //             this.infoComponent.showInfo(name, id, type)
-        //         }
-        //     }
-        // });
+        this.layerPanel.toggleMapLayer("kingdom")
 
         // download location point geo data
         for (let locationType of this.locationPointTypes) {
             // Download GeoJSON + metadata
             const geojson = await this.api.getLocations(locationType)
 
+            // add location data to search service
+            this.searchService.addGeoJsonItems(geojson, locationType)
+
             // Add data to map
             this.mapComponent.addLocationGeojson(locationType, geojson, this.getIconUrl(locationType))
-
-            // Display location layer
-            this.mapComponent.toggleLayer(locationType)
         }
     }
 
