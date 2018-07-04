@@ -118,3 +118,4 @@ fabric.properties
 ### AppEngine template
 # Google App Engine generated folder
 appengine-generated/
+public/client/bundle.js
