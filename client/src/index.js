@@ -1,6 +1,5 @@
 import './styles/index.scss';
-// TODO: load leaflet styles
-//import "leaflet/dist/leaflet.css";
+import "leaflet/dist/leaflet.css";
 import template from "./index.html";
 import ApiService from "./services/ApiService";
 import SearchService from "./services/SearchService";
@@ -91,7 +90,7 @@ class ViewController {
             this.searchService.addGeoJsonItems(geojson, locationType)
 
             // Add data to map
-            this.mapComponent.addLocationGeojson(locationType, geojson, this.getIconUrl(locationType))
+            this.mapComponent.addLocationGeoJson(locationType, geojson, this.getIconUrl(locationType))
         }
     }
 

@@ -25,12 +25,19 @@ const cssLoader = {
 // url loader to resolve data urls at build time
 const urlLoader = {
     test: /\.(.bmp|.png|svg|woff|woff2|eot|ttf|.jpe?g|.gif)$/,
-    loader: "url-loader?limit=100000"
+    loader: "url-loader",
+    options: {
+        limit: 10000,
+        name: "static/media/[name].[hash:8].[ext]"
+    }
 }
 
 const fileLoader = {
-    exclude: [/\.(js|jsx|mjs)$/, /\.html$/, /\.json$/, /\.scss$/],
+    exclude: [/\.(js|jsx|mjs)$/, /\.html$/, /\.json$/, /\.scss$/, /\.css$/],
     loader: "file-loader",
+    options: {
+        name: "static/media/[name].[hash:8].[ext]"
+    }
 }
 
 // html loader allows us to import HTML templates in JS files
