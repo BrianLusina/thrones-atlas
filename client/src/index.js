@@ -40,7 +40,20 @@ class ViewController {
         this.mapComponent.addKingdomGeoJson(kingdomGeoJson);
 
         // show kingdom boundaries
-        this.mapComponent.toggleLayer("kingdoms");
+        this.mapComponent.toggleLayer("kingdoms", {
+            events: {
+                locationSelected: ({
+                    detail: {
+                        name,
+                        id,
+                        type
+                    }
+                }) => {
+                    // show data in infoComponent/InfoPanel on "locationSelected" event
+                    this.infoComponent.showInfo(name, id, type)
+                }
+            }
+        });
 
         // download location point geo data
         for (let locationType of this.locationPointTypes) {
