@@ -78,23 +78,65 @@ export default class Map extends Component {
     }
 
     /**
+     * Add a kingdom polygon to the leaflet instance
+     * @param {Object} geoJson GeoJSON feature
+     */
+    addKingdomGeoJson(geoJson) {
+        // initialize a new GeoJSON feature
+        this.layers.kingdom = L.geoJSON(geoJson, {
+            style: {
+                color: "#222",
+                weight: 1,
+                opacity: 0.65
+            },
+            onEachFeature: this.onEachKingdom.bind(this)
+        })
+    }
+
+    /**
+     * Assign a click event to each kingdom geoJSON feature
+     * @param {Object} properties Feature 
+     * @param {Object} layer Layer on map
+     */
+    onEachKingdom({
+        properties: {
+            name,
+            id
+        }
+    }, layer) {
+        layer.on({
+            click: e => {
+                // deselect the location marker
+                this.map.closePopup();
+                this.setHighlightedRegion(layer);
+                this.triggerEvent("locationSelected", {
+                    name,
+                    id,
+                    type: "kingdom"
+                })
+            }
+        })
+    }
+
+    /**
      * Assign a popup and event listener to each locaation
      * @param {Object} feature Feature 
      * @param {Object} layer Layer on map
      */
-    onEachLocation(feature, layer) {
-        layer.bindPopup(feature.properties.name, {
+    onEachLocation({
+        properties: {
+            name,
+            id,
+            type
+        }
+    }, layer) {
+        layer.bindPopup(name, {
             closeButton: false
         });
         layer.on({
             click: e => {
                 // deselect highlighed region
                 this.setHighlightedRegion(null);
-                const {
-                    name,
-                    id,
-                    type
-                } = feature.properties;
                 this.triggerEvent("locationSelected", {
                     name,
                     id,
@@ -124,5 +166,16 @@ export default class Map extends Component {
         }
     }
 
-
+    /**
+     * Toggle map layer visibility
+     * @param {String} layerName 
+     */
+    toggleLayer(layerName) {
+        const layer = this.layers[layerName];
+        if (this.map.hasLayer(layer)) {
+            this.map.removeLayer(layer)
+        } else {
+            this.map.addLayer(layer)
+        }
+    }
 }
