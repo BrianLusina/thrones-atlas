@@ -1,5 +1,6 @@
 const path = require("path");
 const BabiliPlugin = require("babili-webpack-plugin");
+const Dotenv = require("dotenv-webpack");
 
 // used to transpile ES8 JS for the browser
 const babelLoader = {
@@ -58,6 +59,9 @@ const env = process.env.NODE_ENV;
 const webpackConfig = {
     // start at src/index.js
     entry: ["babel-polyfill", "./src/index.js"],
+    plugins: [
+        new Dotenv()
+    ],
     output: {
         path: path.resolve(__dirname, "public"),
         filename: "bundle.js" // output to public/bundle.js
@@ -70,7 +74,9 @@ const webpackConfig = {
 }
 
 if (env === "production") {
-    webpackConfig.plugins = [new BabiliPlugin({})]
+    webpackConfig.plugins.concat([
+        new BabiliPlugin({}),
+    ])
 } else {
     // generate source maps for dev build
     webpackConfig.devtool = "eval-source-map"
