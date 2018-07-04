@@ -3,7 +3,7 @@
  * This will have the placeholderId, props and template which will be used to construct the template and 
  * render to the DOM.
  */
-export class Component {
+export default class Component {
     /**
      * Component constructor
      * @param {String} placeHolderId Element Id to inflate component into
