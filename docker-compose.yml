@@ -50,16 +50,15 @@ services:
                         update_config:
                                 parallelism: 2
                                 delay: 10s
-
-                restart_policy:
-                        condition: on-failure
+                        restart_policy:
+                                condition: on-failure
    
         db:
-                build: postgres
+                image: postgres:latest
                 ports:
                         - "5432:5432"
                 volumes:
-                        - ./data/atlas_of_thrones.sql:/docker-entrypoint-init.d/atlas_of_thones.sql
+                        - ./data/atlas_of_thrones.sql:/docker-entrypoint-initdb.d/atlas_of_thones.sql
 
 volumes:
         data:
