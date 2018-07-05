@@ -11,7 +11,7 @@
   "scripts": {
     "start:prod": "webpack --mode=production --watch & http-server ./public -p 3000",
     "start:dev": "webpack --mode=development --watch & http-server ./public -p 3000",
-    "build": "NODE_ENV=production webpack"
+    "build": "webpack --mode=production"
   },
   "devDependencies": {
     "babel-loader": "^7.1.4",
