@@ -3,6 +3,10 @@
   "version": "0.6.0",
   "description": "Server for Game of Thrones interactive map",
   "main": "server.js",
+  "repository": {
+    "url": "https://github.com/BrianLusina/thrones-atlas"
+  },
+  "license": "MIT",
   "scripts": {
     "start": "node server.js",
     "start:dev": "nodemon --exec babel-node -- server.js",

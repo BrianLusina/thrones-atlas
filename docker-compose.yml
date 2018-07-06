@@ -23,10 +23,13 @@ services:
 
         server:
                 build: ./server
+                env_file: ./server/.env
                 ports:
                         - "5000:5000"
                 expose:
                         - "8000"
+                networks:
+                        - backend
                 deploy:
                         replicas: 2
                         restart_policy:
@@ -54,12 +57,17 @@ services:
                                 condition: on-failure
    
         db:
-                image: postgres:latest
+                image: mdillon/postgis
                 ports:
                         - "5432:5432"
+                env_file: .env
+                networks:
+                        - backend
                 volumes:
                         - ./data/atlas_of_thrones.sql:/docker-entrypoint-initdb.d/atlas_of_thones.sql
 
 volumes:
         data:
 
+networks:
+        backend:

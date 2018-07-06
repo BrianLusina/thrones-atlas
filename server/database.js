@@ -11,16 +11,11 @@ const client = new Client({
   connectionString
 })
 
-// initialize Postgres Client
-// const pgClient = postgres.Client({
-//   connectionString
-// })
-
 // connect to DB
 client.connect().then(() => {
   log.info(`Connected to ${client.database} at ${client.host}:${client.port}`)
 }).catch(err => {
-  log.error(`Failed to connect to database ${err}`)
+  log.error(`Failed to connect to ${client.database} database with ${err}, connectionString: ${connectionString}`)
 })
 
 module.exports = {
