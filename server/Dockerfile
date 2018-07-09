@@ -11,4 +11,4 @@ RUN npm install
 # this will expose this app to other containers via port 5000
 EXPOSE 5000
 
-CMD [ "npm", "run", "start" ]
+CMD [ "wait-for-it.sh", "db:5432", "--", "npm", "run", "start" ]

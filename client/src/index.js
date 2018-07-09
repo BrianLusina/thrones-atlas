@@ -14,7 +14,7 @@ class ViewController {
 
         this.searchService = new SearchService()
 
-        this.api = new ApiService(process.env.API_URL);
+        this.api = new ApiService();
 
         this.locationPointTypes = ['castle', 'city', 'town', 'ruin', 'region', 'landmark']
         this.initializeComponents()

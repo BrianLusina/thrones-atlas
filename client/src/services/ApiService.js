@@ -24,8 +24,7 @@ class ApiService {
    * url
    * @param {String} url 
    */
-  constructor(url = process.env.DEV_API_URL) {
-    this.url = url;
+  constructor() {
     this.cancelToken = CancelToken.source()
   }
 
@@ -37,7 +36,7 @@ class ApiService {
   async httpGet(endpoint = "") {
     this.cancelToken.cancel("Cancelled Ongoing Request");
     this.cancelToken = CancelToken.source();
-    const response = await get(`${this.url}${endpoint}`, {
+    const response = await get(`${process.env.API_URL}/api/${endpoint}`, {
       cancelToken: this.cancelToken.token
     });
     return response.data;
