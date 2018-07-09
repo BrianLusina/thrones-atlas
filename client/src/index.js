@@ -28,7 +28,19 @@ class ViewController {
         })
 
         // map component
-        this.mapComponent = new Map("map-placeholder")
+        this.mapComponent = new Map("map-placeholder", {
+            events: {
+                locationSelected: event => {
+                    const {
+                        name,
+                        id,
+                        type
+                    } = event.detail;
+                    // show data in info panel component
+                    this.infoComponent.showInfo(name, id, type)
+                }
+            }
+        })
 
         // layer panel
         // When the component triggers the layerToggle event, the callback will then toggle the layer within the map component.

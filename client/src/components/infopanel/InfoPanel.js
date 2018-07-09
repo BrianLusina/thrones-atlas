@@ -49,7 +49,7 @@ export default class InfoPanel extends Component {
             kingdomSize,
             castleCount,
             kingdomSummary
-        } = this.api.getAllKingdomDetails(id);
+        } = await this.api.getAllKingdomDetails(id);
 
         // convert the size to an easily readable string
         kingdomSize = kingdomSize.toLocaleString(undefined, {
@@ -62,7 +62,7 @@ export default class InfoPanel extends Component {
         <h3>KINGDOM</h3>
         <div>Size Estimate - ${kingdomSize} km<sup>2</sup></div>
         <div>Number of Castles - ${castleCount}</div>
-        ${summaryHTML}
+        ${summaryHtml}
         `
     }
 
