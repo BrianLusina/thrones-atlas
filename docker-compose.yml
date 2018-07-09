@@ -3,6 +3,7 @@ version: "3.0"
 services:
         client:
                 build: ./client
+                env_file: ./client/.env
                 environment: 
                         API_URL: http://localhost:5000
                         ICON_URL: https://cdn.patricktriest.com/atlas-of-thrones/icons
