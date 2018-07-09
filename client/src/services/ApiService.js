@@ -24,7 +24,7 @@ class ApiService {
    * url
    * @param {String} url 
    */
-  constructor(url = 'http://0.0.0.0:5000/') {
+  constructor(url = process.env.DEV_API_URL) {
     this.url = url;
     this.cancelToken = CancelToken.source()
   }
