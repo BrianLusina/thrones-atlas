@@ -38,7 +38,7 @@ app.use(async (ctx, next) => {
 // apply default header responses
 app.use(async (ctx, next) => {
   await next()
-  ctx.set('Access-Control-Allow-Origin', 'http://localhost:3000')
+  ctx.set('Access-Control-Allow-Origin', '*')
   ctx.set('Content-Type', 'text/plain; charset=utf')
   ctx.set('Cache-Control', 'public, max-age=3600')
 })

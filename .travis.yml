@@ -19,11 +19,16 @@ cache:
 script:
         - echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
         - cd client && npm ci
+        - ./setup_env.sh
         - npm run build
         - docker build -t $DOCKER_USERNAME/thrones-atlas-client .
         - docker push $DOCKER_USERNAME/thrones-atlas-client
         - cd ..
         - cd server && npm ci
+        - ./setup_env.sh
         - npm run build
         - docker build -t $DOCKER_USERNAME/thrones-atlas-server .
         - docker push $DOCKER_USERNAME/thrones-atlas-server
+        - cd ..
+        - cd data
+        - ./setup_postgresql.sh
