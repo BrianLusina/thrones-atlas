@@ -1,48 +1,94 @@
 version: "3.0"
 
 services:
-#  client:
-#    restart: always
-#    build: ./client
-#    ports:
-#      - "3000:3000"
-#    expose:
-#      - "5000"
-#    volumes:
-#      - /usr/src/app/
-#    command: npm run start
-#    depends_on:
-#      - server
+        client:
+                build: ./client
+                env_file: ./client/.env
+                environment: 
+                        API_URL: http://localhost:5000
+                        ICON_URL: https://cdn.patricktriest.com/atlas-of-thrones/icons
+                ports:
+                        - "3000:3000"
+                expose:
+                        - "3000"
+                networks: 
+                        - frontend
+                container_name: client
+                deploy:
+                        replicas: 3
+                        restart_policy:
+                                condition: on-failure
+                                delay: 5s
+                                max_attempts: 5
+                        update_config:
+                                parallelism: 2
+                                delay: 10s
+                                failure_action: rollback
+                depends_on:
+                        - server
+                links:
+                        - server
+                volumes:
+                        - ./client/:/app
+                        - "/app/node_modules"
 
-  server:
-    restart: always
-    build: ./server
-    ports:
-      - "5000:5000"
-    expose:
-      - "8000"
-    volumes:
-     - /usr/src/app/
-    command: npm run start
-    depends_on:
-     - database
-    links:
-      - database
+        server:
+                build: ./server
+                env_file: ./server/.env
+                ports:
+                        - "5000:5000"
+                expose:
+                        - "8000"
+                networks:
+                        - backend
+                        - frontend
+                container_name: server
+                deploy:
+                        replicas: 2
+                        restart_policy:
+                                condition: on-failure
+                                delay: 3s
+                                max_attempts: 3
+                        update_config:
+                                parallelism: 2
+                                delay: 5s
+                                failure_action: rollback
+                depends_on:
+                        - redis
+                        - db
+                volumes:
+                        - ./server/:/app
+                        - "/app/node_modules"
 
-  redis:
-    restart: always
-    build: ./redis
-    depends_on:
-      - server
+        redis:
+                image: redis:latest
+                ports: 
+                        - "6379"
+                networks: 
+                        - backend
+                container_name: redis
+                deploy:
+                        replicas: 2
+                        update_config:
+                                parallelism: 2
+                                delay: 10s
+                        restart_policy:
+                                condition: on-failure
+   
+        db:
+                image: mdillon/postgis
+                ports:
+                        - "5432:5432"
+                container_name: db
+                env_file: .env
+                networks:
+                        - backend
+                volumes:
+                        - ./data/atlas_of_thrones.sql:/docker-entrypoint-initdb.d/atlas_of_thones.sql
 
-  data:
-    image: postgres:9.6
-    volumes:
-      - /var/lib/postgresql
-    command: "true"
+volumes:
+        data:
 
-  database:
-    restart: always
-    build: ./postgresql
-    ports:
-      - "5432:5432"
+networks:
+        backend:
+        frontend:

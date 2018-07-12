@@ -1,40 +1,52 @@
-require('dotenv').config();
-const Koa = require('koa');
-const cors = require('kcors');
-const log = require('./logger');
-const api = require('./api');
+require('dotenv').config()
+const Koa = require('koa')
+const cors = require('kcors')
+const log = require('./logger')
+const api = require('./api')
 
+// SETUP KOA
+const app = new Koa()
+const port = process.env.PORT || 5000
 
-const app = new Koa();
-const port = process.env.PORT || 8000;
-const origin = process.env.CORS_ORIGIN | "*";
-app.use(cors({ origin }));
+// apply cors
+const origin = process.env.CORS_ORIGIN || '*'
+app.use(cors({
+  origin
+}))
 
-// log requests
+// log all requests
 app.use(async (ctx, next) => {
-    const start = Date.now();
-    // This will pause this function until the endpoint handler has resolved
-    await next();
-    const responseTime = Date.now() - start;
-    log.info(`${ctx.method} ${ctx.status} ${ctx.url} - ${responseTime} ms`);
-});
+  const start = Date.now()
+  // this will pause the control flow until the endpoint handler is resolved
+  await next()
+  const responseTime = Date.now() - start
+  log.info(`${ctx.method} ${ctx.status} ${ctx.url} - ${responseTime} ms`)
+})
 
-/**
- * Error handler, all errors will percolate up to here
- * */
+// error handler
+// all uncaught exceptions will percolate upto here
 app.use(async (ctx, next) => {
-   try{
-       await next();
-   }catch (err){
-       ctx.status = err.status || 500;
-       ctx.body = err.message;
-       log.error(`Request ${ctx.url} - ${err.message}`)
-   }
-});
+  try {
+    await next()
+  } catch (error) {
+    ctx.status = error.status || 500
+    log.error(`Request Error ${ctx.url} - ${error.message}`)
+    log.error(`Error ${error}`)
+  }
+})
 
-app.use(api.routes(), api.allowedMethods());
+// apply default header responses
+app.use(async (ctx, next) => {
+  await next()
+  ctx.set('Access-Control-Allow-Origin', '*')
+  ctx.set('Content-Type', 'text/plain; charset=utf')
+  ctx.set('Cache-Control', 'public, max-age=3600')
+})
 
-/**
- * Run application
- * */
-app.listen(port, () => { log.info(`App listening on port ${port}`) });
+// mount routes
+app.use(api.routes(), api.allowedMethods())
+
+// start the application
+app.listen(port, () => {
+  log.info(`Server listening at port ${port}`)
+})

@@ -1,8 +1,6 @@
-FROM node:latest
+FROM node:10
 
-MAINTAINER Brian Lusina "lusinabrian@gmail.com"
-
-COPY ./package.json /app/package.json
+LABEL maintainer="Brian Lusina,lusinabrian@gmail.com"
 
 ENV PORT 5000
 ENV DATABASE_URL postgres://nightking:atlas@database:5432/atlasofthrones?ssl=false
@@ -12,13 +10,15 @@ ENV CORS_ORIGIN http://localhost:8080
 
 WORKDIR /app
 
-RUN npm install
-
 COPY . /app
 
-# this will expose this app to other containers via port 8000
-EXPOSE 5000
+RUN npm install
 
-# ENTRYPOINT [ "npm" ]
+ENV DATABASE_URL ${DATABASE_URL}
+ENV REDIS_HOST ${REDIS_HOST}
+ENV REDIS_PORT ${REDIS_PORT}
+
+# this will expose this app to other containers via port 5000
+EXPOSE 5000
 
 CMD [ "npm", "run", "start" ]

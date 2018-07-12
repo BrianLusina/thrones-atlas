@@ -1,17 +1,33 @@
 /**
  * API Routes Module
  */
-const Router = require("koa-router");
-// const database = require("./database");
-const cache = require("./cache");
-const joi =  require("joi");
-const validate = require("koa-joi-validate");
+const Router = require('koa-router')
+const database = require('./database')
+// const cache = require('./cache')
 
-const router = new Router();
+const router = new Router()
 
-router.get("/hello", async (ctx, next) => {
-    ctx.body = "hello"
-});
+// TODO: cache middleware
+// check cache before continuing to any endpoint handlers
+// router.use(cache.cacheMiddleware)
 
+// test endpoint
+router.get('/health', async ctx => {
+  ctx.set('Content-Type', 'text/plain; charset=utf')
+  ctx.body = {
+    status: 'OK'
+  }
+})
 
-module.exports = router;
+// add the routes
+router.use('/api', require('./routes').routes())
+
+/**
+ * Get the time from the database
+ */
+router.get('/time', async ctx => {
+  const result = await database.queryTime()
+  ctx.body = result
+})
+
+module.exports = router
