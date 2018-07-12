@@ -1,5 +1,6 @@
 /**
  * Winston Logger Module
+ * Will configure app-wide logging of the application
  */
 
 const winston = require('winston')
