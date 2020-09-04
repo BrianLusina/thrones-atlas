@@ -27,7 +27,7 @@
     "file-loader": "^1.1.11",
     "html-loader": "^0.5.5",
     "http-server": "^0.11.1",
-    "node-sass": "^4.9.0",
+    "node-sass": "^4.13.1",
     "sass-loader": "^7.0.3",
     "style-loader": "^0.21.0",
     "url-loader": "^1.0.1",
