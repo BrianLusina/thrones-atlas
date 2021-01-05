@@ -4,7 +4,7 @@
   "private": true,
   "description": "Client for Game of Thrones interactive map, Powered by Leaflet",
   "dependencies": {
-    "axios": "^0.18.1",
+    "axios": "^0.21.1",
     "fuse.js": "^3.2.1",
     "leaflet": "^1.3.1"
   },
